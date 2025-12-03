@@ -2,13 +2,21 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SolarFlow Pro | Dimensionamento Estratégico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#059669">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>SolarFlow Pro</title>
     
+    <!-- PWA MANIFEST -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- ESTILOS VISUAIS --- */
         :root {
             --primary: #059669; --primary-dark: #047857;
             --secondary: #d97706; --secondary-light: #fff7ed;
@@ -20,42 +28,37 @@
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
-        * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--dark); line-height: 1.5; padding-bottom: 60px; }
+        * { box-sizing: border-box; outline: none; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--dark); line-height: 1.5; padding-bottom: 60px; overscroll-behavior-y: none; }
         
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
 
-        /* HEADER */
         header {
-            background: var(--white); padding: 25px; border-radius: var(--radius);
+            background: var(--white); padding: 20px; border-radius: var(--radius);
             box-shadow: var(--shadow); border-bottom: 4px solid var(--primary);
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
         }
-        .brand { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: flex; gap: 10px; align-items: center; }
+        .brand { font-size: 1.3rem; font-weight: 800; color: var(--primary); display: flex; gap: 10px; align-items: center; }
         .brand span { color: var(--dark); }
 
-        /* GRID */
-        .main-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 25px; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 20px; }
         @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
 
-        /* CARDS */
-        .card { background: var(--white); padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow); height: fit-content; }
+        .card { background: var(--white); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); height: fit-content; }
         .card-header { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px; }
         .card-header i { color: var(--primary); }
 
-        /* FORM */
         .form-group { margin-bottom: 15px; }
         .label { font-size: 0.85rem; font-weight: 600; color: var(--gray); margin-bottom: 5px; display: block; }
         .input-box { position: relative; display: flex; align-items: center; }
         .form-control {
             width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px;
-            font-size: 0.95rem; transition: 0.2s; font-family: 'Inter', sans-serif;
+            font-size: 1rem; transition: 0.2s; font-family: 'Inter', sans-serif;
         }
         .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1); }
         .form-control[readonly] { background: #f8fafc; color: #94a3b8; cursor: not-allowed; }
         .unit { position: absolute; right: 12px; color: #94a3b8; font-size: 0.8rem; font-weight: 600; pointer-events: none; }
 
-        /* CUSTOM BOXES (Ranges) */
         .tech-box { background: #f1f5f9; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 15px; }
         .strategy-box { background: var(--secondary-light); padding: 15px; border-radius: 8px; border: 1px solid #ffedd5; margin-bottom: 15px; }
         
@@ -64,14 +67,11 @@
         .range-val { font-size: 0.8rem; font-weight: 700; color: var(--primary); }
         
         input[type=range] { width: 100%; height: 6px; border-radius: 5px; appearance: none; outline: none; background: #cbd5e1; }
-        input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--primary); cursor: pointer; transition: 0.1s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        
-        /* Modificador para slider laranja */
+        input[type=range]::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; transition: 0.1s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .strategy-box input[type=range]::-webkit-slider-thumb { background: var(--secondary); }
         .strategy-box .range-val { color: var(--secondary); }
 
-        /* BUTTONS */
-        .btn { border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; font-size: 1rem; }
+        .btn { border: none; padding: 14px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; font-size: 1rem; }
         .btn-primary { background: var(--primary); color: white; width: 100%; }
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
         .btn-icon { width: 48px; padding: 0; flex-shrink: 0; }
@@ -81,26 +81,21 @@
         .btn-wa { background: var(--whatsapp); color: white; }
         .btn-wa:hover { background: #128c7e; }
 
-        /* RESULTS */
-        .results-wrapper { opacity: 0; transform: translateY(20px); transition: 0.5s; pointer-events: none; }
-        .results-wrapper.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .results-wrapper { opacity: 0; transform: translateY(20px); transition: 0.5s; pointer-events: none; display: none; }
+        .results-wrapper.visible { opacity: 1; transform: translateY(0); pointer-events: all; display: block; }
 
         .kpi-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
         .kpi { background: #f8fafc; padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary); }
         .kpi.money { background: #ecfdf5; border-color: var(--success); }
         .kpi-title { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: var(--gray); margin-bottom: 5px; }
-        .kpi-val { font-size: 1.5rem; font-weight: 800; color: var(--dark); line-height: 1.1; }
-        .kpi-sub { font-size: 0.8rem; color: #94a3b8; }
+        .kpi-val { font-size: 1.4rem; font-weight: 800; color: var(--dark); line-height: 1.1; }
+        .kpi-sub { font-size: 0.75rem; color: #94a3b8; }
         .text-green { color: var(--primary); }
 
-        /* CONSUMPTION BAR */
         .cons-comparison { margin: 20px 0; background: #fff; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; }
         .cons-line { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px; font-weight: 600; }
         .cons-track { width: 100%; height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; position: relative; }
-        .cons-fill-base { height: 100%; background: var(--gray); width: 0%; transition: 1s; }
-        .cons-fill-extra { height: 100%; background: var(--secondary); width: 0%; transition: 1s; }
-
-        /* TABLES & INSIGHTS */
+        
         .tech-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 20px; }
         .tech-table th { text-align: left; padding: 8px; color: var(--gray); border-bottom: 1px solid #e2e8f0; }
         .tech-table td { padding: 8px; color: var(--dark); border-bottom: 1px solid #e2e8f0; font-weight: 500; }
@@ -109,15 +104,12 @@
         .insight-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; flex-shrink: 0; }
         .bg-ok { background: var(--success); } .bg-warn { background: var(--warning); } .bg-bad { background: var(--danger); }
 
-        /* BRANDING */
         details.branding { background: #f0fdf4; border: 1px dashed var(--primary); padding: 10px; border-radius: 8px; margin-bottom: 15px; }
         details.branding summary { cursor: pointer; color: var(--primary); font-weight: 600; font-size: 0.9rem; }
 
-        /* LOADER */
         .loader { width: 18px; height: 18px; border: 2px solid #fff; border-bottom-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* PRINT */
         @media print {
             body { background: white; -webkit-print-color-adjust: exact; }
             header, .no-print { display: none !important; }
@@ -135,14 +127,15 @@
     <header>
         <div class="brand">
             <i class="fas fa-solar-panel"></i>
-            <div>SolarFlow <span>Pro</span></div>
+            <div>SolarFlow <span>App</span></div>
         </div>
         <div style="font-size:0.8rem; font-weight:600; color:var(--gray); text-align:right;">
-            Engenharia & Estratégia<br>v3.0 Ultimate
+            v3.0.1 Stable
         </div>
     </header>
 
     <div class="main-grid">
+        <!-- ÁREA DE INPUTS -->
         <div class="card no-print">
             <div class="card-header"><i class="fas fa-sliders-h"></i> Dados de Entrada</div>
             
@@ -159,8 +152,8 @@
                     <label class="label">Localização</label>
                     <div style="display:flex; gap:8px;">
                         <input type="text" id="city" class="form-control" placeholder="Cidade..." onchange="saveData()">
-                        <button type="button" class="btn btn-gps btn-icon" onclick="getGPS()"><i class="fas fa-crosshairs"></i></button>
-                        <button type="button" class="btn btn-search btn-icon" onclick="searchCity()" id="btnSearch">
+                        <button type="button" class="btn btn-gps btn-icon" onclick="getGPS()" title="Usar GPS Atual"><i class="fas fa-crosshairs"></i></button>
+                        <button type="button" class="btn btn-search btn-icon" onclick="searchCity()" id="btnSearch" title="Buscar por nome">
                             <i class="fas fa-search" id="icoSearch"></i><div class="loader" id="spin"></div>
                         </button>
                     </div>
@@ -200,14 +193,14 @@
                     </div>
                 </div>
 
+                <!-- PAINEL DE ESTRATÉGIA -->
                 <div class="strategy-box">
                     <div style="margin-bottom:12px;">
                         <div class="range-header">
-                            <span class="range-title">Fator de "Vício de Consumo"</span>
+                            <span class="range-title">Vício de Consumo (Conforto)</span>
                             <span class="range-val" id="vicioVal">0%</span>
                         </div>
                         <input type="range" id="vicio" min="0" max="50" value="0" oninput="document.getElementById('vicioVal').innerText=this.value+'%'; if(calculated) calcular();">
-                        <small style="font-size:0.7rem; color:#d97706;">Aumento natural de consumo (Ar-condicionado, conforto).</small>
                     </div>
 
                     <div>
@@ -216,7 +209,6 @@
                             <span class="range-val" id="expVal">0%</span>
                         </div>
                         <input type="range" id="exp" min="0" max="100" value="0" oninput="document.getElementById('expVal').innerText=this.value+'%'; if(calculated) calcular();">
-                        <small style="font-size:0.7rem; color:#d97706;">Sobra planejada para futuro (Carro elétrico, Piscina).</small>
                     </div>
                 </div>
 
@@ -232,6 +224,7 @@
             </form>
         </div>
 
+        <!-- ÁREA DE RESULTADOS -->
         <div class="results-wrapper" id="resCard">
             <div id="print-header">
                 <h2>Relatório Técnico Fotovoltaico</h2>
@@ -256,25 +249,24 @@
 
                 <div class="cons-comparison">
                     <div class="cons-line">
-                        <span>Consumo Base: <span id="txtBase">0</span> kWh</span>
-                        <span style="color:var(--secondary);">Projetado: <span id="txtProj">0</span> kWh</span>
+                        <span>Base: <span id="txtBase">0</span> kWh</span>
+                        <span style="color:var(--secondary);">Proj.: <span id="txtProj">0</span> kWh</span>
                     </div>
                     <div style="display:flex; height:10px; width:100%; background:#e2e8f0; border-radius:5px; overflow:hidden;">
                         <div id="barBase" style="height:100%; background:var(--gray); width:0%;"></div>
                         <div id="barExtra" style="height:100%; background:var(--secondary); width:0%;"></div>
                     </div>
-                    <small style="display:block; margin-top:5px; color:#94a3b8; font-size:0.75rem;">A parte laranja representa o aumento por conforto e expansão.</small>
                 </div>
 
                 <div class="kpi-row">
                     <div class="kpi">
-                        <div class="kpi-title">Potência Sistema</div>
+                        <div class="kpi-title">Potência</div>
                         <div class="kpi-val"><span id="resKwp">0</span> <small style="font-size:1rem;">kWp</small></div>
                     </div>
                     <div class="kpi">
                         <div class="kpi-title">Módulos</div>
                         <div class="kpi-val" id="resPanels">0</div>
-                        <div class="kpi-sub">Placas Fotovoltaicas</div>
+                        <div class="kpi-sub">Placas</div>
                     </div>
                 </div>
 
@@ -283,9 +275,9 @@
                         <h4 style="font-size:0.9rem; margin-bottom:10px;">📋 Dados Técnicos</h4>
                         <table class="tech-table">
                             <tr><th>Inversor</th><td id="resInv">0 kW</td></tr>
-                            <tr><th>Geração Estimada</th><td id="resGen">0 kWh</td></tr>
+                            <tr><th>Geração</th><td id="resGen">0 kWh</td></tr>
                             <tr><th>Área</th><td id="resArea">0 m²</td></tr>
-                            <tr><th>Overload</th><td id="resOv">0%</td></tr>
+                            <tr><th>FDI</th><td id="resOv">0%</td></tr>
                         </table>
                     </div>
                     <div>
@@ -303,11 +295,18 @@
     </div>
     
     <div style="text-align:center; margin-top:40px; color:#94a3b8; font-size:0.8rem;" id="copyright">
-        &copy; 2025 SolarFlow Pro. Engenharia & Estratégia.
+        &copy; 2025 SolarFlow Pro
     </div>
 </div>
 
 <script>
+    // --- SERVICE WORKER (PWA) - COM CORREÇÃO DE ERRO ---
+    if ('serviceWorker' in navigator) {
+        // O .catch impede que o erro trave a aplicação se não tiver HTTPS
+        navigator.serviceWorker.register('sw.js').catch(e => console.warn('SW não registrado (requer HTTPS ou localhost):', e));
+    }
+
+    // --- CONFIGURAÇÕES ---
     const API_GEO = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=";
     const API_REV = "https://nominatim.openstreetmap.org/reverse?format=json";
     const API_METEO = "https://archive-api.open-meteo.com/v1/archive";
@@ -315,9 +314,11 @@
     let calculated = false;
     let lat = 0, lon = 0;
 
+    // --- INICIALIZAÇÃO ---
     window.onload = () => {
         loadData();
-        setInterval(() => { if(!document.getElementById('copyright')) document.body.innerHTML = "Erro de Licença."; }, 3000);
+        // Check de copyright simples
+        setInterval(() => { if(!document.getElementById('copyright')) document.body.innerHTML = "Erro de Licença."; }, 5000);
     };
 
     function saveData() {
@@ -337,6 +338,7 @@
         if(localStorage.getItem("sf_panel")) document.getElementById("panel").value = localStorage.getItem("sf_panel");
     }
 
+    // --- GEO LOCATOR (ATUALIZADO E ROBUSTO) ---
     async function searchCity() {
         const city = document.getElementById('city').value;
         if(!city) return msg("Digite a cidade!", "red");
@@ -346,42 +348,69 @@
             const d = await r.json();
             if(!d.length) throw new Error("404");
             setGeo(d[0].lat, d[0].lon, d[0].display_name);
-        } catch(e) { msg("Cidade não encontrada.", "red"); manualHsp(); } 
+        } catch(e) { msg("Não encontrado. Tente outra.", "red"); manualHsp(); } 
         finally { loader(false); }
     }
 
     function getGPS() {
-        if(!navigator.geolocation) return msg("Sem GPS", "red");
+        if(!navigator.geolocation) return msg("Navegador sem GPS.", "red");
+        
         loader(true);
+        msg("Buscando satélites...", "#d97706");
+
+        const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+
         navigator.geolocation.getCurrentPosition(async p => {
             try {
                 const {latitude, longitude} = p.coords;
+                // Busca endereço reverso
                 const r = await fetch(`${API_REV}&lat=${latitude}&lon=${longitude}`);
                 const d = await r.json();
-                let name = d.address.city || d.address.town || "Local GPS";
-                setGeo(latitude, longitude, name + (d.address.state ? ` - ${d.address.state}` : ""));
-            } catch(e) { manualHsp(); }
+                
+                let name = d.address.city || d.address.town || d.address.municipality || "Local GPS";
+                if(d.address.state) name += ` - ${d.address.state}`;
+                
+                setGeo(latitude, longitude, name);
+            } catch(e) { 
+                console.error(e);
+                setGeo(p.coords.latitude, p.coords.longitude, "Localização GPS"); 
+            }
             finally { loader(false); }
-        }, () => { loader(false); msg("GPS Bloqueado", "red"); manualHsp(); });
+        }, (err) => { 
+            loader(false); 
+            console.warn(err);
+            if(err.code === 1) msg("Permissão negada. Ative o GPS.", "red");
+            else if(err.code === 3) msg("Tempo esgotado.", "red");
+            else msg("GPS indisponível.", "red");
+            manualHsp(); 
+        }, options);
     }
 
     async function setGeo(lt, ln, name) {
         lat = lt; lon = ln;
         document.getElementById('city').value = name.split(',')[0] + " - " + (name.split(',')[1]||"").trim();
         msg("Buscando dados solares...", "#d97706");
+        
         const yr = new Date().getFullYear() - 1;
         const u = `${API_METEO}?latitude=${lt}&longitude=${ln}&start_date=${yr}-01-01&end_date=${yr}-12-31&daily=shortwave_radiation_sum&timezone=auto`;
+        
         try {
             const r = await fetch(u); const d = await r.json();
+            if(!d.daily) throw new Error("Dados climáticos offline");
+            
             const sum = d.daily.shortwave_radiation_sum.reduce((a,b)=>a+b,0);
             const hsp = ((sum/d.daily.shortwave_radiation_sum.length)/3.6).toFixed(2);
             document.getElementById('hsp').value = hsp;
             msg("HSP Localizado: " + hsp, "green");
             saveData();
             if(calculated) calcular();
-        } catch(e) { manualHsp(); }
+        } catch(e) { 
+            msg("Erro climático. Digite HSP manual.", "red"); 
+            manualHsp(); 
+        }
     }
 
+    // --- CÁLCULO DO SISTEMA ---
     function calcular() {
         const consBase = parseFloat(document.getElementById('cons').value);
         const tar = parseFloat(document.getElementById('tariff').value);
@@ -394,10 +423,8 @@
 
         if(!consBase || !hsp || !pan || !tar) return alert("Preencha todos os campos!");
 
-        // LOGICA DE CONSUMO FUTURO
         const consFinal = consBase * (1 + vicio) * (1 + exp);
         
-        // Math Solar
         const reqKwp = (consFinal/30) / (hsp * pr);
         const numPan = Math.ceil((reqKwp * 1000) / pan);
         const realKwp = (numPan * pan) / 1000;
@@ -408,11 +435,9 @@
         const realOv = ((realKwp/inv)-1)*100;
         const gen = realKwp * hsp * 30 * pr;
         
-        // Financials (Economia baseada na geração total vs custo da concessionaria)
         const saveMo = gen * tar;
         const saveYr = saveMo * 12;
 
-        // Render Text
         setText('resKwp', realKwp.toFixed(2).replace('.', ','));
         setText('resPanels', numPan);
         setText('resInv', inv.toFixed(1).replace('.', ',') + " kW");
@@ -426,29 +451,26 @@
         setText('resSaveMonth', saveMo.toFixed(2).replace('.', ','));
         setText('resSaveYear', saveYr.toFixed(2).replace('.', ','));
 
-        // VISUAL BARS (Consumo base vs Extra)
         setText('txtBase', consBase);
         setText('txtProj', Math.floor(consFinal));
         
-        const totalW = 100;
         const basePerc = (consBase / consFinal) * 100;
         const extraPerc = 100 - basePerc;
         
         document.getElementById('barBase').style.width = basePerc + "%";
         document.getElementById('barExtra').style.width = extraPerc + "%";
 
-        // INSIGHTS
         const list = document.getElementById('insights');
         list.innerHTML = "";
         
-        if(vicio > 0 || exp > 0) addIns(list, "fas fa-rocket", "bg-warn", "Sobredimensionamento", `Sistema projetado para gerar <b>${((consFinal/consBase - 1)*100).toFixed(0)}% a mais</b> que o consumo atual.`);
+        if(vicio > 0 || exp > 0) addIns(list, "fas fa-rocket", "bg-warn", "Sobredimensionamento", `Gerando <b>${((consFinal/consBase - 1)*100).toFixed(0)}% a mais</b> que o consumo atual.`);
         
         if(realOv > 50) addIns(list, "fas fa-fire", "bg-bad", "Overload Crítico", "FDI > 50%. Perda alta.");
         else if(realOv > 30) addIns(list, "fas fa-chart-area", "bg-warn", "Clipping Estratégico", "Ganho na curva vs perda no pico.");
         else addIns(list, "fas fa-check", "bg-ok", "Dimensionamento Ideal", "Sistema equilibrado.");
         
         const tlt = lat ? Math.abs(lat).toFixed(0) : 10;
-        addIns(list, "fas fa-compass", "bg-ok", "Instalação", `Face ${lat<0?"Norte":"Sul"}, Inclinação ${tlt}°.`);
+        addIns(list, "fas fa-compass", "bg-ok", "Instalação", `Face ${lat<0?"Norte":"Sul"}, Inc. ${tlt}°.`);
 
         document.getElementById('resCard').classList.add('visible');
         calculated = true;
@@ -482,7 +504,7 @@
         `💰 *Economia Anual: R$ ${document.getElementById('resSaveYear').innerText}*%0A%0A` +
         `🛠️ *Sistema:* ${document.getElementById('resKwp').innerText} kWp%0A` +
         `🔌 *Inversor:* ${document.getElementById('resInv').innerText}%0A` +
-        `⚡ *Geração Média:* ${document.getElementById('resGen').innerText}%0A%0A` +
+        `⚡ *Geração:* ${document.getElementById('resGen').innerText}%0A%0A` +
         `_Projeto preparado para o futuro!_`;
         
         let url = `https://wa.me/?text=${txt}`;
