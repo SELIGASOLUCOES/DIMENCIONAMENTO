@@ -185,11 +185,21 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="label">Potência Painel</label>
-                    <div class="input-box">
-                        <input type="number" id="panel" class="form-control" value="550" required onchange="saveData()">
-                        <span class="unit">Wp</span>
+                <!-- LINHA PAINEL E EFICIÊNCIA -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div class="form-group">
+                        <label class="label">Potência Painel</label>
+                        <div class="input-box">
+                            <input type="number" id="panel" class="form-control" value="550" required onchange="saveData()">
+                            <span class="unit">Wp</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Eficiência (PR)</label>
+                        <div class="input-box">
+                            <input type="number" id="eff" class="form-control" value="80" required onchange="saveData()">
+                            <span class="unit">%</span>
+                        </div>
                     </div>
                 </div>
 
@@ -277,7 +287,7 @@
                             <tr><th>Inversor</th><td id="resInv">0 kW</td></tr>
                             <tr><th>Geração</th><td id="resGen">0 kWh</td></tr>
                             <tr><th>Área</th><td id="resArea">0 m²</td></tr>
-                            <tr><th>FDI</th><td id="resOv">0%</td></tr>
+                            <tr><th>Overload (FDI)</th><td id="resOv">0%</td></tr>
                         </table>
                     </div>
                     <div>
@@ -328,6 +338,7 @@
         localStorage.setItem("sf_cons", document.getElementById("cons").value);
         localStorage.setItem("sf_tariff", document.getElementById("tariff").value);
         localStorage.setItem("sf_panel", document.getElementById("panel").value);
+        localStorage.setItem("sf_eff", document.getElementById("eff").value); // SALVA EFICIENCIA
     }
     function loadData() {
         if(localStorage.getItem("sf_name")) document.getElementById("intName").value = localStorage.getItem("sf_name");
@@ -336,6 +347,7 @@
         if(localStorage.getItem("sf_cons")) document.getElementById("cons").value = localStorage.getItem("sf_cons");
         if(localStorage.getItem("sf_tariff")) document.getElementById("tariff").value = localStorage.getItem("sf_tariff");
         if(localStorage.getItem("sf_panel")) document.getElementById("panel").value = localStorage.getItem("sf_panel");
+        if(localStorage.getItem("sf_eff")) document.getElementById("eff").value = localStorage.getItem("sf_eff"); // CARREGA EFICIENCIA
     }
 
     // --- GEO LOCATOR (ATUALIZADO E ROBUSTO) ---
@@ -416,10 +428,13 @@
         const tar = parseFloat(document.getElementById('tariff').value);
         const hsp = parseFloat(document.getElementById('hsp').value);
         const pan = parseFloat(document.getElementById('panel').value);
+        const eff = parseFloat(document.getElementById('eff').value); // PEGA O VALOR DO CAMPO NOVO
         const ovTgt = parseFloat(document.getElementById('overload').value);
         const vicio = parseFloat(document.getElementById('vicio').value) / 100;
         const exp = parseFloat(document.getElementById('exp').value) / 100;
-        const pr = 0.75;
+        
+        // Converte eficiência para decimal (ex: 80 -> 0.80) e trata erro
+        const pr = (eff > 0) ? eff / 100 : 0.80; 
 
         if(!consBase || !hsp || !pan || !tar) return alert("Preencha todos os campos!");
 
